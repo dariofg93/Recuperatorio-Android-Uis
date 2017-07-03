@@ -25,7 +25,7 @@ public class LugaresAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.row_pista, null);
 
-        Button textNombreLugar = (Button) item.findViewById(R.id.lugar);
+        TextView textNombreLugar = (TextView) item.findViewById(R.id.lugar);
         textNombreLugar.setText(lugares.get(position));
 
         return item;

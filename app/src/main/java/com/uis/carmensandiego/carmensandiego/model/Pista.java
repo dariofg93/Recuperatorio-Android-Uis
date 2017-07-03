@@ -6,9 +6,9 @@ public class Pista {
     private String resultadoOrden;
 
     public Pista(String pista,String resultadoOrden){
-            this.pista = pista;
-            this.resultadoOrden = resultadoOrden;
-        }
+        this.pista = pista;
+        this.resultadoOrden = resultadoOrden;
+    }
 
     public String getPista() {
         return pista;
@@ -24,5 +24,9 @@ public class Pista {
 
     public void setResultadoOrden(String resultadoOrden) {
         this.resultadoOrden = resultadoOrden;
+    }
+
+    public boolean estaElVillano() {
+        return !(getResultadoOrden() == null);
     }
 }

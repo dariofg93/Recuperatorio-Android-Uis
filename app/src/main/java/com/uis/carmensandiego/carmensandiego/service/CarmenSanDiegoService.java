@@ -22,8 +22,8 @@ public interface CarmenSanDiegoService {
     @GET("/villanos")
     void getVillanos(Callback<List<Villano>> callback);
 
-    @GET("/pistasDelLugar/{casoId}/{nombreLugar}")
-    void getPista(@Path("casoId") int idCaso, @Query("nombreLugar") String lugar, Callback<Pista> callback);
+    @GET("/pistaDelLugar/{casoId}/{nombreLugar}")
+    void getPista(@Path("casoId") int idCaso, @Path("nombreLugar") String lugar, Callback<Pista> callback);
 
     @POST("/emitirOrden")
     void emitirOrdenPara(@Body OrdenEmitida ordenEmitida, Callback<Caso> callback);
