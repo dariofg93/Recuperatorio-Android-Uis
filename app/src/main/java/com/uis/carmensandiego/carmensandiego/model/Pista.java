@@ -17,4 +17,12 @@ public class Pista {
     public void setPista(String pista) {
         this.pista = pista;
     }
+
+    public String getResultadoOrden() {
+        return resultadoOrden;
+    }
+
+    public void setResultadoOrden(String resultadoOrden) {
+        this.resultadoOrden = resultadoOrden;
+    }
 }
