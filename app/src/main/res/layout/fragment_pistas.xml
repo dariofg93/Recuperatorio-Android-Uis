@@ -7,15 +7,18 @@ android:orientation="vertical"
 android:padding="10dp"
 android:weightSum="1">
 
-    <ListView
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listLugares"></ListView>
+        android:text="Pistas"
+        android:textSize="25sp"
+        android:layout_gravity="top"/>
 
-    <Button
-        android:id="@+id/lugar"
-        android:layout_width="match_parent"
+    <ListView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="mostrarPista"/>
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:id="@+id/listLugares"/>
 
 </LinearLayout>

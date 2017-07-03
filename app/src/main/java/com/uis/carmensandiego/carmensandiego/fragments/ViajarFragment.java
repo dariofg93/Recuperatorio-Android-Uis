@@ -1,18 +1,18 @@
-package com.uis.carmensandiego.carmensandiego;
+package com.uis.carmensandiego.carmensandiego.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.uis.carmensandiego.carmensandiego.MainActivity;
+import com.uis.carmensandiego.carmensandiego.R;
 import com.uis.carmensandiego.carmensandiego.adapter.ConexionesAdapter;
 import com.uis.carmensandiego.carmensandiego.model.Caso;
 import com.uis.carmensandiego.carmensandiego.model.Pais;
@@ -29,20 +29,19 @@ import retrofit.client.Response;
 
 public class ViajarFragment extends Fragment {
 
-    private List<Pais> conexiones;
-    private Caso caso;
+    private MainActivity activity;
 
-    public ViajarFragment() {
-    }
+    public ViajarFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viajar, container, false);
+        activity = ((MainActivity) getActivity());
 
         llenarConexiones(view);
 
         final ListView lv = (ListView) view.findViewById(R.id.listConexiones);
-        //NO ANDA
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -55,7 +54,7 @@ public class ViajarFragment extends Fragment {
     }
 
     public void llenarConexiones(View view){
-        Caso caso = ((MainActivity) getActivity()).getCaso();
+        Caso caso = activity.getCaso();
         ListView lvConexiones = (ListView) view.findViewById(R.id.listConexiones);
         List<String> conexionesNombre = this.getNombreConexiones(caso.getPais().getConexiones());
         ConexionesAdapter adapter = new ConexionesAdapter(getActivity(),conexionesNombre);
@@ -82,15 +81,17 @@ public class ViajarFragment extends Fragment {
     }
 
     public void viajar(final String nombrePaisSeleccionado) {
-        Caso caso = ((MainActivity) getActivity()).getCaso();
+        Caso caso = activity.getCaso();
         int idPaisSeleccionado = getIdPais(caso.getPais().getConexiones(), nombrePaisSeleccionado);
-
-        CarmenSanDiegoService carmenSanDiegoService = new Connection().getService();
+        CarmenSanDiegoService carmenSanDiegoService = Connection.getService();
         Viajar viajarRequest = new Viajar(caso.getId(), idPaisSeleccionado);
         carmenSanDiegoService.viajar(viajarRequest, new Callback<Caso>() {
             @Override
             public void success(Caso caso, Response response) {
-                Toast toastOrdenEmitida = Toast.makeText(getContext(), "Conexion: "+ nombrePaisSeleccionado, Toast.LENGTH_SHORT);
+                activity.setCaso(caso);
+                activity.updateCaso();
+                llenarConexiones(getView());
+                Toast toastOrdenEmitida = Toast.makeText(getContext(), "Viajaste a "+ nombrePaisSeleccionado, Toast.LENGTH_SHORT);
                 toastOrdenEmitida.setGravity(Gravity.NO_GRAVITY, 0, 0);
                 toastOrdenEmitida.show();
             }

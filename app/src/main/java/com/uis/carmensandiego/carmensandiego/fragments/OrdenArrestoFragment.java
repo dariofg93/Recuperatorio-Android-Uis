@@ -1,4 +1,4 @@
-package com.uis.carmensandiego.carmensandiego;
+package com.uis.carmensandiego.carmensandiego.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,9 +13,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.uis.carmensandiego.carmensandiego.MainActivity;
+import com.uis.carmensandiego.carmensandiego.R;
 import com.uis.carmensandiego.carmensandiego.model.Caso;
 import com.uis.carmensandiego.carmensandiego.model.OrdenEmitida;
-import com.uis.carmensandiego.carmensandiego.model.Viajar;
 import com.uis.carmensandiego.carmensandiego.model.Villano;
 import com.uis.carmensandiego.carmensandiego.service.CarmenSanDiegoService;
 import com.uis.carmensandiego.carmensandiego.service.Connection;
@@ -29,23 +30,21 @@ import retrofit.client.Response;
 
 public class OrdenArrestoFragment extends Fragment {
 
-    private int idSeleccionado;
+    private MainActivity activity;
     private List<Villano> villanos;
 
-    public OrdenArrestoFragment() {
-    }
+    public OrdenArrestoFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_orden_arresto, container, false);
+        activity = ((MainActivity) getActivity());
 
         //Listener para el boton onclick, sino explota
         Button button = (Button) view.findViewById(R.id.emitir_orden);
-        button.setOnClickListener(new View.OnClickListener()
-        {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 emitirOrdenContra();
             }
         });
@@ -56,7 +55,7 @@ public class OrdenArrestoFragment extends Fragment {
     }
 
     private void obtenerVillanos(final View view) {
-        CarmenSanDiegoService carmenSanDiegoService = new Connection().getService();
+        CarmenSanDiegoService carmenSanDiegoService = Connection.getService();
         carmenSanDiegoService.getVillanos(new Callback<List<Villano>>() {
             @Override
             public void success(List<Villano> villanos, Response response) {
@@ -76,7 +75,7 @@ public class OrdenArrestoFragment extends Fragment {
         Spinner spinner = (Spinner) view.findViewById(R.id.spinner_villanos);
         List<String> nombresVillanos = getNombresVillanos(villanos);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, nombresVillanos);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, nombresVillanos);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
@@ -107,13 +106,12 @@ public class OrdenArrestoFragment extends Fragment {
 
         int idVillanoSeleccionado = getIdVillano(villanos, nombreVillanoSeleccionado);
 
-        CarmenSanDiegoService carmenSanDiegoService = new Connection().getService();
-        Caso caso = ((MainActivity) getActivity()).getCaso();
-        OrdenEmitida ordenEmitidaBody = new OrdenEmitida(idVillanoSeleccionado, caso.getId());
+        CarmenSanDiegoService carmenSanDiegoService = Connection.getService();
+        OrdenEmitida ordenEmitidaBody = new OrdenEmitida(idVillanoSeleccionado, activity.getCaso().getId());
         carmenSanDiegoService.emitirOrdenPara(ordenEmitidaBody, new Callback<Caso>() {
             @Override
             public void success(Caso caso, Response response) {
-                procesarOrdenEmitida(caso, nombreVillanoSeleccionado);
+                procesarOrdenEmitida(caso);
             }
 
             @Override
@@ -124,13 +122,13 @@ public class OrdenArrestoFragment extends Fragment {
         });
     }
 
-    public void procesarOrdenEmitida(Caso caso, String nombreVillanoSeleccionado) {
-        ((TextView) getActivity().findViewById(R.id.orden_arresto)).setText("Orden de arresto contra: " + nombreVillanoSeleccionado);
-        Toast toastOrdenEmitida = Toast.makeText(getContext(), "Orden emitida correctamente contra: "+nombreVillanoSeleccionado, Toast.LENGTH_SHORT);
+    public void procesarOrdenEmitida(Caso caso) {
+        activity.setCaso(caso);
+        activity.updateCaso();
+
+        Toast toastOrdenEmitida = Toast.makeText(getContext(), "Orden emitida exitosamente", Toast.LENGTH_SHORT);
         toastOrdenEmitida.setGravity(Gravity.NO_GRAVITY, 0, 0);
         toastOrdenEmitida.show();
     }
-
-
 }
 

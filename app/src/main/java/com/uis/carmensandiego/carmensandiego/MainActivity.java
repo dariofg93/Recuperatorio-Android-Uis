@@ -1,6 +1,5 @@
 package com.uis.carmensandiego.carmensandiego;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -11,6 +10,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.uis.carmensandiego.carmensandiego.fragments.OrdenArrestoFragment;
+import com.uis.carmensandiego.carmensandiego.fragments.PistasFragment;
+import com.uis.carmensandiego.carmensandiego.fragments.ViajarFragment;
 import com.uis.carmensandiego.carmensandiego.model.Caso;
 import com.uis.carmensandiego.carmensandiego.service.CarmenSanDiegoService;
 import com.uis.carmensandiego.carmensandiego.service.Connection;
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
-        fragment = new OrdenArrestoFragment();
+        setDefaultView();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.content, fragment).commit();
 
@@ -64,8 +66,12 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    public void iniciarJuego() {
-        CarmenSanDiegoService carmenSanDiegoService = new Connection().getService();
+    private void setDefaultView() {
+        fragment = new OrdenArrestoFragment();
+    }
+
+    private void iniciarJuego() {
+        CarmenSanDiegoService carmenSanDiegoService = Connection.getService();
         carmenSanDiegoService.iniciarJuego(new Callback<Caso>() {
             @Override
             public void success(Caso caso, Response response) {
@@ -79,13 +85,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void llenarMainActivity(Caso caso) {
+    private void llenarMainActivity(Caso caso) {
         this.caso = caso;
-        ((TextView) findViewById(R.id.pais_actual)).setText("Estas en " + caso.getPais().getNombre());
-        ((TextView) findViewById(R.id.orden_arresto)).setText("Orden de arresto contra: " + caso.getOrdenContra());
+        this.updateCaso();
     }
 
     public Caso getCaso() {
         return this.caso;
+    }
+
+    public Caso setCaso(Caso caso) {
+        return this.caso = caso;
+    }
+
+    public void updateCaso(){
+        ((TextView) findViewById(R.id.pais_actual)).setText("Estas en " + getCaso().getPais().getNombre());
+        ((TextView) findViewById(R.id.orden_arresto)).setText("Orden de arresto contra: " + getCaso().getOrdenContra());
     }
 }
