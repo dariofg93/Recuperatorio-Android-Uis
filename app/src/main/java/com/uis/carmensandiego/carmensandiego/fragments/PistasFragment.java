@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -82,21 +83,23 @@ public class PistasFragment extends Fragment {
 
         if(pista.estaElVillano()) {
             if (pista.esGanador())
-                showAlert(builder, "ENHORABUENA ", pista.getResultadoOrden());
+                showAlert(builder, "ENHORABUENA ", pista.getResultadoOrden(), R.drawable.ganee,R.drawable.victoria);
             else
-                showAlert(builder, "FRACASADO ", pista.getResultadoOrden());
+                showAlert(builder, "FRACASADO ", pista.getResultadoOrden(), R.drawable.perdii,R.drawable.fracaso);
         }
     }
 
-    private void showAlert(AlertDialog.Builder builder, String title, String pistas) {
+    private void showAlert(AlertDialog.Builder builder, String title, String pistas, int icon, int image) {
+        ImageView im = new ImageView(activity);
+        im.setImageResource(image);
+
         builder.setTitle(title)
                 .setMessage(pistas)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // close alerts
-                    }
+                    public void onClick(DialogInterface dialog, int which) {}
                 })
-                .setIcon(android.R.drawable.ic_dialog_info)
+                .setIcon(icon)
+                .setView(im)
                 .show();
     }
 }
