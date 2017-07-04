@@ -52,8 +52,10 @@ public class PistasFragment extends Fragment {
 
     public void llenarLugares(View view) {
         Caso caso = activity.getCaso();
+
         ListView lvLugares = (ListView) view.findViewById(R.id.listLugares);
         LugaresAdapter adapter = new LugaresAdapter(getActivity(),caso.getPais().getLugares());
+
         lvLugares.setAdapter(adapter);
     }
     public void pedirPistas(String lugar) {

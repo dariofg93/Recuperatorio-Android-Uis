@@ -39,7 +39,6 @@ public class OrdenArrestoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_orden_arresto, container, false);
         activity = ((MainActivity) getActivity());
 
-        //Listener para el boton onclick, sino explota
         Button button = (Button) view.findViewById(R.id.emitir_orden);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,4 +3,11 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="orden_de_arresto">Orden de arresto</string>
+    <string name="emitir_orden_de_arresto_contra">Emitir orden de arresto contra:</string>
+    <string name="pedir_orden_de_arresto">Pedir orden de arresto</string>
+    <string name="pistas">Pistas</string>
+    <string name="viajar">Viajar</string>
+    <string name="destinos_visitados">Destinos visitados:</string>
+    <string name="destinos_fallidos">Destinos fallidos:</string>
 </resources>

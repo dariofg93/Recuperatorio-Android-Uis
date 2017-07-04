@@ -60,12 +60,13 @@ public class ViajarFragment extends Fragment {
 
     public void llenarConexiones(View view){
         Caso caso = activity.getCaso();
+
         ListView lvConexiones = (ListView) view.findViewById(R.id.listConexiones);
         List<String> conexionesNombre = this.getNombreConexiones(caso.getPais().getConexiones());
         ConexionesAdapter adapter = new ConexionesAdapter(getActivity(),conexionesNombre);
+
         lvConexiones.setAdapter(adapter);
     }
-
 
     public List<String> getNombreConexiones(List<Pais> pais){
         List<String> nombreConexiones = new ArrayList<>();
@@ -88,22 +89,13 @@ public class ViajarFragment extends Fragment {
     public void viajar(final String nombrePaisSeleccionado) {
         Caso caso = activity.getCaso();
         int idPaisSeleccionado = getIdPais(caso.getPais().getConexiones(), nombrePaisSeleccionado);
-        CarmenSanDiegoService carmenSanDiegoService = Connection.getService();
         Viajar viajarRequest = new Viajar(caso.getId(), idPaisSeleccionado);
+
+        CarmenSanDiegoService carmenSanDiegoService = Connection.getService();
         carmenSanDiegoService.viajar(viajarRequest, new Callback<Caso>() {
             @Override
             public void success(Caso caso, Response response) {
-                activity.setCaso(caso);
-                activity.updateCaso();
-
-                ((TextView) activity.findViewById(R.id.visitados)).setText(StringUtils.join(activity.getCaso().getPaisesVisitados(), " -> "));
-                ((TextView) activity.findViewById(R.id.fallidos)).setText(StringUtils.join(activity.getCaso().getPaisesFallidos(), " -> "));
-
-                llenarConexiones(getView());
-
-                Toast toastOrdenEmitida = Toast.makeText(getContext(), "Viajaste a "+ nombrePaisSeleccionado, Toast.LENGTH_SHORT);
-                toastOrdenEmitida.setGravity(Gravity.NO_GRAVITY, 0, 0);
-                toastOrdenEmitida.show();
+                procesarViaje(caso,nombrePaisSeleccionado);
             }
 
             @Override
@@ -112,6 +104,20 @@ public class ViajarFragment extends Fragment {
                 error.printStackTrace();
             }
         });
+    }
+
+    private void procesarViaje(Caso caso, String pais){
+        activity.setCaso(caso);
+        activity.updateCaso();
+
+        ((TextView) activity.findViewById(R.id.visitados)).setText(StringUtils.join(caso.getPaisesVisitados(), " -> "));
+        ((TextView) activity.findViewById(R.id.fallidos)).setText(StringUtils.join(caso.getPaisesFallidos(), " -> "));
+
+        llenarConexiones(getView());
+
+        Toast toastOrdenEmitida = Toast.makeText(getContext(), "Viajaste a "+ pais, Toast.LENGTH_SHORT);
+        toastOrdenEmitida.setGravity(Gravity.NO_GRAVITY, 0, 0);
+        toastOrdenEmitida.show();
     }
 }
 
