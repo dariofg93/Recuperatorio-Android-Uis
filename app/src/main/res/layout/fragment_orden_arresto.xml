@@ -18,7 +18,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/orden_de_arresto"
-                android:textSize="25sp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="30sp"
+                android:textStyle="bold"
                 android:layout_gravity="top"/>
 
             <TextView
@@ -37,10 +39,15 @@
 
             <Button
                 android:id="@+id/emitir_orden"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+                android:layout_gravity="center"
                 android:onClick="emitirOrdenContra"
+                android:background="@android:color/holo_orange_dark"
+                android:textColor="@android:color/white"
+                android:paddingRight="7sp"
+                android:paddingLeft="7sp"
                 android:text="@string/pedir_orden_de_arresto" />
 
         </LinearLayout>

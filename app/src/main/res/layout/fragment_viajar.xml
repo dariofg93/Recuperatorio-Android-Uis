@@ -18,7 +18,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/viajar"
-                android:textSize="25sp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="30sp"
+                android:textStyle="bold"
                 android:layout_gravity="top"/>
 
             <ListView
@@ -28,33 +30,34 @@
                 android:layout_marginTop="10dp"
                 android:textAlignment="center" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/destinos_visitados"
-                android:textSize="20sp"
-                android:layout_gravity="top"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/visitados"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/destinos_fallidos"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp"
-                android:layout_gravity="top"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/fallidos"/>
-
         </LinearLayout>
 
     </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/destinos_visitados"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:layout_gravity="top"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/visitados"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/destinos_fallidos"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:layout_gravity="top"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fallidos"/>
 
 </LinearLayout>
