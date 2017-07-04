@@ -7,17 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uis.carmensandiego.carmensandiego.fragments.OrdenArrestoFragment;
 import com.uis.carmensandiego.carmensandiego.fragments.PistasFragment;
 import com.uis.carmensandiego.carmensandiego.fragments.ViajarFragment;
 import com.uis.carmensandiego.carmensandiego.model.Caso;
-import com.uis.carmensandiego.carmensandiego.model.Pista;
 import com.uis.carmensandiego.carmensandiego.service.CarmenSanDiegoService;
 import com.uis.carmensandiego.carmensandiego.service.Connection;
 
@@ -25,9 +21,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static java.security.AccessController.getContext;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private Fragment fragment;
     private FragmentManager fragmentManager;

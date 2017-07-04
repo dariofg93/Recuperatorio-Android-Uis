@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uis.carmensandiego.carmensandiego.MainActivity;
@@ -19,6 +20,8 @@ import com.uis.carmensandiego.carmensandiego.model.Pais;
 import com.uis.carmensandiego.carmensandiego.model.Viajar;
 import com.uis.carmensandiego.carmensandiego.service.CarmenSanDiegoService;
 import com.uis.carmensandiego.carmensandiego.service.Connection;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +41,12 @@ public class ViajarFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_viajar, container, false);
         activity = ((MainActivity) getActivity());
 
+        ((TextView) view.findViewById(R.id.visitados)).setText(StringUtils.join(activity.getCaso().getPaisesVisitados(), " -> "));
+        ((TextView) view.findViewById(R.id.fallidos)).setText(StringUtils.join(activity.getCaso().getPaisesFallidos(), " -> "));
+
         llenarConexiones(view);
 
         final ListView lv = (ListView) view.findViewById(R.id.listConexiones);
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -90,7 +95,12 @@ public class ViajarFragment extends Fragment {
             public void success(Caso caso, Response response) {
                 activity.setCaso(caso);
                 activity.updateCaso();
+
+                ((TextView) activity.findViewById(R.id.visitados)).setText(StringUtils.join(activity.getCaso().getPaisesVisitados(), " -> "));
+                ((TextView) activity.findViewById(R.id.fallidos)).setText(StringUtils.join(activity.getCaso().getPaisesFallidos(), " -> "));
+
                 llenarConexiones(getView());
+
                 Toast toastOrdenEmitida = Toast.makeText(getContext(), "Viajaste a "+ nombrePaisSeleccionado, Toast.LENGTH_SHORT);
                 toastOrdenEmitida.setGravity(Gravity.NO_GRAVITY, 0, 0);
                 toastOrdenEmitida.show();
@@ -102,7 +112,6 @@ public class ViajarFragment extends Fragment {
                 error.printStackTrace();
             }
         });
-
     }
 }
 

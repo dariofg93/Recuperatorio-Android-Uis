@@ -29,4 +29,8 @@ public class Pista {
     public boolean estaElVillano() {
         return !(getResultadoOrden() == null);
     }
+
+    public Boolean esGanador(){
+        return getResultadoOrden().endsWith("Felicitaciones!!!");
+    }
 }

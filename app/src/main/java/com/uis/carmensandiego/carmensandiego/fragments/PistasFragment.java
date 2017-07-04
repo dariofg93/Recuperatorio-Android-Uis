@@ -21,6 +21,8 @@ import com.uis.carmensandiego.carmensandiego.model.Pista;
 import com.uis.carmensandiego.carmensandiego.service.CarmenSanDiegoService;
 import com.uis.carmensandiego.carmensandiego.service.Connection;
 
+import org.apache.commons.lang3.StringUtils;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -74,13 +76,17 @@ public class PistasFragment extends Fragment {
     }
 
     private void showPistas(Pista pista) {
+        ((TextView) activity.findViewById(R.id.muestraPista)).setText("Pistas encontradas: \n\t" + StringUtils.join(pista.getPista().split(","),"\n\t"));
+
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
 
-        if(pista.estaElVillano())
-            showAlert(builder,"Resultado del juego: ",pista.getResultadoOrden());
-        else
-            showAlert(builder,"Pista obtenida:",pista.getPista());
+        if(pista.estaElVillano()) {
+            if (pista.esGanador())
+                showAlert(builder, "ENHORABUENA ", pista.getResultadoOrden());
+            else
+                showAlert(builder, "FRACASADO ", pista.getResultadoOrden());
+        }
     }
 
     private void showAlert(AlertDialog.Builder builder, String title, String pistas) {
