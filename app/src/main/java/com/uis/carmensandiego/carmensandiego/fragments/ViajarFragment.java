@@ -78,7 +78,7 @@ public class ViajarFragment extends Fragment {
     private int getIdPais(List<Pais> conexiones, String paisSeleccionado) {
         int id = 0;
         for(Pais pais : conexiones){
-            if (pais.getNombre() == paisSeleccionado){
+            if (pais.getNombre().equals(paisSeleccionado)){
                 id = pais.getId();
             }
         }

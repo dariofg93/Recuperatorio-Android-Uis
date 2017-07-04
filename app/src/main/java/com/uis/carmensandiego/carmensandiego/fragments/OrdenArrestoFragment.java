@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uis.carmensandiego.carmensandiego.MainActivity;
@@ -92,7 +91,7 @@ public class OrdenArrestoFragment extends Fragment {
     private int getIdVillano(List<Villano> villanos, String nombreSeleccionado) {
         int id = 0;
         for(Villano v : villanos){
-            if (v.getNombre() == nombreSeleccionado){
+            if (v.getNombre().equals(nombreSeleccionado)){
                 id = v.getId();
             }
         }

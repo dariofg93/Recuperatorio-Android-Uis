@@ -10,7 +10,6 @@ public class Connection {
         String API_URL = "http://"+ SERVER_IP +":9000";
 
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(API_URL).build();
-        CarmenSanDiegoService carmenSanDiegoService = restAdapter.create(CarmenSanDiegoService.class);
-        return carmenSanDiegoService;
+        return restAdapter.create(CarmenSanDiegoService.class);
     }
 }

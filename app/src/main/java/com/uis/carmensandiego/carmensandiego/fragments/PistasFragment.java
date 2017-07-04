@@ -4,14 +4,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uis.carmensandiego.carmensandiego.MainActivity;
 import com.uis.carmensandiego.carmensandiego.R;
@@ -29,7 +27,6 @@ import retrofit.client.Response;
 
 public class PistasFragment extends Fragment {
 
-    private ListView lvLugares;
     private MainActivity activity;
 
     public PistasFragment() {}
@@ -55,7 +52,7 @@ public class PistasFragment extends Fragment {
 
     public void llenarLugares(View view) {
         Caso caso = activity.getCaso();
-        lvLugares = (ListView) view.findViewById(R.id.listLugares);
+        ListView lvLugares = (ListView) view.findViewById(R.id.listLugares);
         LugaresAdapter adapter = new LugaresAdapter(getActivity(),caso.getPais().getLugares());
         lvLugares.setAdapter(adapter);
     }
